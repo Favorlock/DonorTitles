@@ -32,8 +32,7 @@ public class SetTitle extends BaseCommand {
 		if (sender instanceof Player) {
 			if (DonorTitles.perms.has(player, "donortitles.set")) {
 				try {
-					if (!DBManager.titleExists(DBManager
-							.getTitleFromId(titleId))) {
+					if (!DBManager.idExist(titleId)) {
 						sender.sendMessage("No titles exist with this id.");
 						return false;
 					}

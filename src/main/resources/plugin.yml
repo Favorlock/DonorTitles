@@ -2,7 +2,7 @@ name: DonorTitles
 author:
   - Favorlock
 main: com.favorlock.donortitles.DonorTitles
-version: 0.3.2
+version: 0.3.5b
 depend: [Vault]
 commands:
   titles:
