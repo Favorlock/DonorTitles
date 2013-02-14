@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import com.favorlock.donortitles.DonorTitles;
 import com.favorlock.donortitles.cmd.BaseCommand;
 import com.favorlock.donortitles.db.DBManager;
+import com.favorlock.donortitles.util.FontFormat;
 
 public class SetTitle extends BaseCommand {
 
@@ -26,8 +27,7 @@ public class SetTitle extends BaseCommand {
 	public boolean execute(CommandSender sender, String identifier,
 			String[] args) {
 		Player player = (Player) sender;
-		String title = args[0];
-		int titleId = Integer.parseInt(title);
+		String titleId = args[0];
 
 		if (sender instanceof Player) {
 			if (DonorTitles.perms.has(player, "donortitles.set")) {
@@ -40,8 +40,8 @@ public class SetTitle extends BaseCommand {
 					if (DBManager.hasTitle(sender.getName(), titleId)) {
 						DonorTitles.chat.setPlayerPrefix(player,
 								DBManager.getTitleFromId(titleId));
-						sender.sendMessage("Your title has been set to "
-								+ DBManager.getTitleFromId(titleId) + ".");
+						sender.sendMessage(FontFormat.translateString("Your title has been set to "
+								+ DBManager.getTitleFromId(titleId) + "&r."));
 						return true;
 					} else {
 						sender.sendMessage("You do not have this title.");

@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import com.favorlock.donortitles.DonorTitles;
 import com.favorlock.donortitles.cmd.BaseCommand;
 import com.favorlock.donortitles.db.DBManager;
+import com.favorlock.donortitles.util.FontFormat;
 
 public class GrantTitle extends BaseCommand {
 
@@ -26,31 +27,25 @@ public class GrantTitle extends BaseCommand {
 	public boolean execute(CommandSender sender, String identifier,
 			String[] args) {
 		String playerName = args[0];
-		String title = args[1];
-		int titleId = Integer.parseInt(title);
+		String titleId = args[1];
 
 		if (sender instanceof Player) {
 			Player player = (Player) sender;
 			if (DonorTitles.perms.has(player, "donortitles.grant")) {
 				try {
-					if (!DBManager.titleExists(DBManager
-							.getTitleFromId(titleId))) {
-						sender.sendMessage("No titles exist with this id.");
+					if (!DBManager.idExist(titleId)) {
+						sender.sendMessage("This id does not exist.");
 						return false;
 					}
 					if (DBManager.hasTitle(playerName, titleId)) {
 						sender.sendMessage("Player already has this title.");
 						return false;
 					}
-					if (DBManager.getTitleFromId(titleId) == null) {
-						sender.sendMessage("This title does not exist");
-						return false;
-					}
 					if (DBManager.getTitleFromId(titleId) != null) {
 						DBManager.grantTitle(playerName, titleId);
-						sender.sendMessage("Player " + playerName
-								+ " has been given the title: "
-								+ DBManager.getTitleFromId(titleId));
+						sender.sendMessage(FontFormat.translateString("Player " + playerName
+								+ " has been granted the title: "
+								+ DBManager.getTitleFromId(titleId) + "&r."));
 						return true;
 					} else {
 						sender.sendMessage("There was an error granting a player a title");

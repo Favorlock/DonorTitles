@@ -43,8 +43,8 @@ public class SQLDatabase {
 		
 		if(!(dbm.isTable("titles") || dbm.isTable("players"))) {
 			try {
-				dbm.query("CREATE TABLE IF NOT EXISTS titles (titleid INTEGER PRIMARY KEY AUTO_INCREMENT, titlename VARCHAR(20));");
-				dbm.query("CREATE TABLE IF NOT EXISTS players (playername VARCHAR(20) PRIMARY KEY, titleid INTEGER);");
+				dbm.query("CREATE TABLE IF NOT EXISTS titles (titleid VARCHAR(20) PRIMARY KEY, titlename VARCHAR(20));");
+				dbm.query("CREATE TABLE IF NOT EXISTS players (playername VARCHAR(20) PRIMARY KEY, titleid VARCHAR(20));");
 				
 				dbm.query("ALTER TABLE players ADD CONSTRAINT FK_TITLES_ID FOREIGN KEY (titleid) REFERENCES titles(titleid);");
 				

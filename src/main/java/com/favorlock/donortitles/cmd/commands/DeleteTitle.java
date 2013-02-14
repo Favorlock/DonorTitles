@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import com.favorlock.donortitles.DonorTitles;
 import com.favorlock.donortitles.cmd.BaseCommand;
 import com.favorlock.donortitles.db.DBManager;
+import com.favorlock.donortitles.util.FontFormat;
 
 public class DeleteTitle extends BaseCommand {
 	
@@ -24,19 +25,26 @@ public class DeleteTitle extends BaseCommand {
 
 	@Override
 	public boolean execute(CommandSender sender, String identifier, String[] args) {
-		String title = args[0];
-		int titleId = Integer.parseInt(title);
+		String titleId = args[0];
+		String title = "";
+		
+		try {
+			title = DBManager.getTitleFromId(titleId);
+		} catch (Exception ex) {
+			plugin.getLogger().log(Level.SEVERE, "Failed to assign title to variable", ex);
+			return false;
+		}
 		
 		if (sender instanceof Player) {
 			Player player = (Player) sender;
 			if (DonorTitles.perms.has(player, "donortitles.delete")) {
 				try {
-					if (!DBManager.titleExists(DBManager.getTitleFromId(titleId))) {
-						sender.sendMessage("The title does not exist.");
+					if (!DBManager.idExist(titleId)) {
+						sender.sendMessage("This id does not exist.");
 						return false;
 					}
-					if (DBManager.deleteTitle(DBManager.getTitleFromId(titleId))) {
-						sender.sendMessage("The title has been deleted.");
+					if (DBManager.deleteTitle(titleId)) {
+						sender.sendMessage(FontFormat.translateString("The title " + title + "&r has been deleted."));
 						return true;
 					} else {
 						sender.sendMessage("There was an error deleting the title.");

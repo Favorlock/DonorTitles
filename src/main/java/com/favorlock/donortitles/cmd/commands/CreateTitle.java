@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import com.favorlock.donortitles.DonorTitles;
 import com.favorlock.donortitles.cmd.BaseCommand;
 import com.favorlock.donortitles.db.DBManager;
+import com.favorlock.donortitles.util.FontFormat;
 
 public class CreateTitle extends BaseCommand {
 	
@@ -17,25 +18,30 @@ public class CreateTitle extends BaseCommand {
 		super("Titles Create");
 		this.plugin = plugin;
 		setDescription("Creat a new title");
-		setUsage("/titles create <name>");
-		setArgumentRange(1, 1);
+		setUsage("/titles create <identifier> <title>");
+		setArgumentRange(2, 2);
 		setIdentifiers(new String[] { "titles create" });
 	}
 
 	@Override
 	public boolean execute(CommandSender sender, String identifier, String[] args) {
-		String titleName = args[0];
+		String titleName = args[1];
+		String titleId = args[0];
 		
 		if (sender instanceof Player) {
 			Player player = (Player) sender;
 			if (DonorTitles.perms.has(player, "donortitles.create")) {
 				try {
+					if (DBManager.idExist(titleId)) {
+						sender.sendMessage("This id already exist.");
+						return false;
+					}
 					if (DBManager.titleExists(titleName)) {
 						sender.sendMessage("This title already exist.");
 						return false;
 					}
-					if (DBManager.createTitle(titleName)) {
-						sender.sendMessage("The title " + titleName + " was created.");
+					if (DBManager.createTitle(titleId, titleName)) {
+						sender.sendMessage(FontFormat.translateString("The title " + titleName + "&r was created."));
 						return true;
 					} else {
 						sender.sendMessage("There was an error creating the title.");

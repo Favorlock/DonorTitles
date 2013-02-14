@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import com.favorlock.donortitles.DonorTitles;
 import com.favorlock.donortitles.cmd.BaseCommand;
 import com.favorlock.donortitles.db.DBManager;
+import com.favorlock.donortitles.util.FontFormat;
 
 public class RevokeTitle extends BaseCommand {
 
@@ -26,8 +27,7 @@ public class RevokeTitle extends BaseCommand {
 	public boolean execute(CommandSender sender, String identifier,
 			String[] args) {
 		String playerName = args[0];
-		String title = args[1];
-		int titleId = Integer.parseInt(title);
+		String titleId = args[1];
 
 		if (sender instanceof Player) {
 			Player player = (Player) sender;
@@ -48,9 +48,9 @@ public class RevokeTitle extends BaseCommand {
 					}
 					if (DBManager.getTitleFromId(titleId) != null) {
 						DBManager.revokeTitle(playerName, titleId);
-						sender.sendMessage("Player " + playerName
+						sender.sendMessage(FontFormat.translateString("Player " + playerName
 								+ " has lost the title: "
-								+ DBManager.getTitleFromId(titleId));
+								+ DBManager.getTitleFromId(titleId) + "&r."));
 						return true;
 					} else {
 						sender.sendMessage("There was an error granting a player a title");
