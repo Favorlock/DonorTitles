@@ -1,0 +1,10 @@
+name: DonorTitles
+author:
+  - Favorlock
+main: com.favorlock.donortitles.DonorTitles
+version: 0.2.1
+depend: [Vault]
+commands:
+  titles:
+    description: DonorTitles commands
+    usage: /<command>

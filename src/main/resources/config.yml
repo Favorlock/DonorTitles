@@ -1,0 +1,9 @@
+data:
+  backend: MySQL
+  db:
+    host: localhost
+    port: 3306
+    database: DonorTitles
+    username: ''
+    password: ''
+    prefix: ''
