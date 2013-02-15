@@ -15,12 +15,12 @@ public class SetTitle extends BaseCommand {
 	private final DonorTitles plugin;
 
 	public SetTitle(DonorTitles plugin) {
-		super("Titles Set");
+		super("Title Set");
 		this.plugin = plugin;
 		setDescription("Set your title");
-		setUsage("/titles set <id>");
+		setUsage("/title set <id>");
 		setArgumentRange(1, 1);
-		setIdentifiers(new String[] { "titles set" });
+		setIdentifiers(new String[] { "title set" });
 	}
 
 	@Override

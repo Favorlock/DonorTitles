@@ -15,12 +15,12 @@ public class RevokeTitle extends BaseCommand {
 	private final DonorTitles plugin;
 
 	public RevokeTitle(DonorTitles plugin) {
-		super("Titles Revoke");
+		super("Title Revoke");
 		this.plugin = plugin;
 		setDescription("Revoke a title from a user");
-		setUsage("/titles revoke <user> <id>");
+		setUsage("/title revoke <user> <id>");
 		setArgumentRange(2, 2);
-		setIdentifiers(new String[] { "titles revoke" });
+		setIdentifiers(new String[] { "title revoke" });
 	}
 
 	@Override

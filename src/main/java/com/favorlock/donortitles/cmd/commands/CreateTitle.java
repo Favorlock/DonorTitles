@@ -15,12 +15,12 @@ public class CreateTitle extends BaseCommand {
 	private final DonorTitles plugin;
 
 	public CreateTitle(DonorTitles plugin) {
-		super("Titles Create");
+		super("Title Create");
 		this.plugin = plugin;
 		setDescription("Creat a new title");
-		setUsage("/titles create <identifier> <title>");
+		setUsage("/title create <identifier> <title>");
 		setArgumentRange(2, 2);
-		setIdentifiers(new String[] { "titles create" });
+		setIdentifiers(new String[] { "title create" });
 	}
 
 	@Override

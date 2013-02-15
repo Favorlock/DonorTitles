@@ -15,12 +15,12 @@ public class DeleteTitle extends BaseCommand {
 	private final DonorTitles plugin;
 
 	public DeleteTitle(DonorTitles plugin) {
-		super("Titles Delete");
+		super("Title Delete");
 		this.plugin = plugin;
 		setDescription("Delete a title");
-		setUsage("/titles delete <id>");
+		setUsage("/title delete <id>");
 		setArgumentRange(1, 1);
-		setIdentifiers(new String[] { "titles delete" });
+		setIdentifiers(new String[] { "title delete" });
 	}
 
 	@Override

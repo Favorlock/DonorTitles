@@ -11,12 +11,12 @@ public class ClearTitle extends BaseCommand {
 	private final DonorTitles plugin;
 
 	public ClearTitle(DonorTitles plugin) {
-		super("Titles Clear");
+		super("Title Clear");
 		this.plugin = plugin;
 		setDescription("Clear used title");
-		setUsage("/titles clear");
+		setUsage("/title clear");
 		setArgumentRange(0, 0);
-		setIdentifiers(new String[] { "titles clear" });
+		setIdentifiers(new String[] { "title clear" });
 	}
 
 	@Override

@@ -15,12 +15,12 @@ public class GrantTitle extends BaseCommand {
 	private final DonorTitles plugin;
 
 	public GrantTitle(DonorTitles plugin) {
-		super("Titles Grant");
+		super("Title Grant");
 		this.plugin = plugin;
 		setDescription("Grant a user a title");
-		setUsage("/titles grant <user> <id>");
+		setUsage("/title grant <user> <id>");
 		setArgumentRange(2, 2);
-		setIdentifiers(new String[] { "titles grant" });
+		setIdentifiers(new String[] { "title grant" });
 	}
 
 	@Override

@@ -5,6 +5,6 @@ main: com.favorlock.donortitles.DonorTitles
 version: 0.3.5b
 depend: [Vault]
 commands:
-  titles:
+  title:
     description: DonorTitles commands
     usage: /<command>
