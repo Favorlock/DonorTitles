@@ -35,8 +35,14 @@ public class ListTitles extends BaseCommand {
 					String ownedIds = "";
 					list = DBManager.getOwnedTitles(sender.getName());
 					
-					for (String id : list) {
-						ownedIds += id + ", ";
+					if (list.size() >= 1) {
+						for (String id : list) {
+							ownedIds += id + ", ";
+						}
+						ownedIds = ownedIds.substring(0, ownedIds.length() - 2);
+					} else {
+						sender.sendMessage("You do not own any titles");
+						return false;
 					}
 					
 					sender.sendMessage(FontFormat.translateString("&eYour Owned Titles:\n&r" + ownedIds));

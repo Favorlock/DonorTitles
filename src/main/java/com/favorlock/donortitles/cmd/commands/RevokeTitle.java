@@ -33,8 +33,7 @@ public class RevokeTitle extends BaseCommand {
 			Player player = (Player) sender;
 			if (DonorTitles.perms.has(player, "donortitles.revoke")) {
 				try {
-					if (!DBManager.titleExists(DBManager
-							.getTitleFromId(titleId))) {
+					if (!DBManager.idExist(titleId)) {
 						sender.sendMessage("No titles exist with this id.");
 						return false;
 					}

@@ -17,6 +17,7 @@ import com.favorlock.donortitles.cmd.commands.ClearTitle;
 import com.favorlock.donortitles.cmd.commands.CreateTitle;
 import com.favorlock.donortitles.cmd.commands.DeleteTitle;
 import com.favorlock.donortitles.cmd.commands.GrantTitle;
+import com.favorlock.donortitles.cmd.commands.HelpTitle;
 import com.favorlock.donortitles.cmd.commands.ListTitles;
 import com.favorlock.donortitles.cmd.commands.RevokeTitle;
 import com.favorlock.donortitles.cmd.commands.SetTitle;
@@ -75,6 +76,7 @@ public class DonorTitles extends JavaPlugin {
 		this.commandHandler.addCommand(new CreateTitle(this));
 		this.commandHandler.addCommand(new DeleteTitle(this));
 		this.commandHandler.addCommand(new GrantTitle(this));
+		this.commandHandler.addCommand(new HelpTitle(this));
 		this.commandHandler.addCommand(new ListTitles(this));
 		this.commandHandler.addCommand(new RevokeTitle(this));
 		this.commandHandler.addCommand(new SetTitle(this));
