@@ -3,6 +3,7 @@ package com.favorlock.donortitles.db;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class DBManager {
 	
@@ -188,6 +189,26 @@ public class DBManager {
 		}
 		
 		return retVal;
+	}
+	
+	public static ArrayList<String> getOwnedTitles(String playerName) throws SQLException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<String> al = new ArrayList<String>();
+		
+		try {
+			ps = SQLDatabase.dbm.getConnection().prepareStatement("SELECT titleid FROM players WHERE playername = ?;");
+			ps.setString(1, playerName);
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				al.add(rs.getString("titleid"));
+			}
+		} catch (SQLException ex) {
+			throw new SQLException("There was an error getting the players titles", ex);
+		}
+		
+		return al;
 	}
 
 }
