@@ -20,6 +20,7 @@ public class RevokeTitle extends BaseCommand {
 		setDescription("Revoke a title from a user");
 		setUsage("/title revoke <user> <id>");
 		setArgumentRange(2, 2);
+		setPermission("donortitles.revoke");
 		setIdentifiers(new String[] { "title revoke" });
 	}
 
@@ -30,39 +31,34 @@ public class RevokeTitle extends BaseCommand {
 		String titleId = args[1];
 
 		if (sender instanceof Player) {
-			Player player = (Player) sender;
-			if (DonorTitles.perms.has(player, "donortitles.revoke")) {
-				try {
-					if (!DBManager.idExist(titleId)) {
-						sender.sendMessage("No titles exist with this id.");
-						return false;
-					}
-					if (!DBManager.hasTitle(playerName, titleId)) {
-						sender.sendMessage("Player does not have this title.");
-						return false;
-					}
-					if (DBManager.getTitleFromId(titleId) == null) {
-						sender.sendMessage("This title does not exist.");
-						return false;
-					}
-					if (DBManager.getTitleFromId(titleId) != null) {
-						DBManager.revokeTitle(playerName, titleId);
-						sender.sendMessage(FontFormat.translateString("Player " + playerName
-								+ " has lost the title: "
-								+ DBManager.getTitleFromId(titleId) + "&r."));
-						return true;
-					} else {
-						sender.sendMessage("There was an error granting a player a title");
-					}
-				} catch (Exception ex) {
-					plugin.getLogger().log(Level.SEVERE,
-							"Error executing Title Grant command.", ex);
+			try {
+				if (!DBManager.idExist(titleId)) {
+					sender.sendMessage("No titles exist with this id.");
 					return false;
 				}
-
+				if (!DBManager.hasTitle(playerName, titleId)) {
+					sender.sendMessage("Player does not have this title.");
+					return false;
+				}
+				if (DBManager.getTitleFromId(titleId) == null) {
+					sender.sendMessage("This title does not exist.");
+					return false;
+				}
+				if (DBManager.getTitleFromId(titleId) != null) {
+					DBManager.revokeTitle(playerName, titleId);
+					sender.sendMessage(FontFormat.translateString("Player "
+							+ playerName + " has lost the title: "
+							+ DBManager.getTitleFromId(titleId) + "&r."));
+					return true;
+				} else {
+					sender.sendMessage("There was an error granting a player a title");
+				}
+			} catch (Exception ex) {
+				plugin.getLogger().log(Level.SEVERE,
+						"Error executing Title Grant command.", ex);
 				return false;
 			}
-			sender.sendMessage("You do not have permission");
+
 			return false;
 		}
 		sender.sendMessage("Only players can use this command");

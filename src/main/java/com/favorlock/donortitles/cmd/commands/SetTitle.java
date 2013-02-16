@@ -20,6 +20,7 @@ public class SetTitle extends BaseCommand {
 		setDescription("Set your title");
 		setUsage("/title set <id>");
 		setArgumentRange(1, 1);
+		setPermission("donortitles.set");
 		setIdentifiers(new String[] { "title set" });
 	}
 
@@ -30,29 +31,26 @@ public class SetTitle extends BaseCommand {
 		String titleId = args[0];
 
 		if (sender instanceof Player) {
-			if (DonorTitles.perms.has(player, "donortitles.set")) {
-				try {
-					if (!DBManager.idExist(titleId)) {
-						sender.sendMessage("No titles exist with this id.");
-						return false;
-					}
-					if (DBManager.hasTitle(sender.getName(), titleId)) {
-						DonorTitles.chat.setPlayerPrefix(player,
-								DBManager.getTitleFromId(titleId));
-						sender.sendMessage(FontFormat.translateString("Your title has been set to "
-								+ DBManager.getTitleFromId(titleId) + "&r."));
-						return true;
-					} else {
-						sender.sendMessage("You do not have this title.");
-					}
-				} catch (Exception ex) {
-					plugin.getLogger().log(Level.SEVERE,
-							"Error executing Title Set command.", ex);
+			try {
+				if (!DBManager.idExist(titleId)) {
+					sender.sendMessage("No titles exist with this id.");
 					return false;
 				}
+				if (DBManager.hasTitle(sender.getName(), titleId)) {
+					DonorTitles.chat.setPlayerPrefix(player,
+							DBManager.getTitleFromId(titleId));
+					sender.sendMessage(FontFormat
+							.translateString("Your title has been set to "
+									+ DBManager.getTitleFromId(titleId) + "&r."));
+					return true;
+				} else {
+					sender.sendMessage("You do not have this title.");
+				}
+			} catch (Exception ex) {
+				plugin.getLogger().log(Level.SEVERE,
+						"Error executing Title Set command.", ex);
 				return false;
 			}
-			sender.sendMessage("You do not have permission");
 			return false;
 		}
 		sender.sendMessage("Only players can use this command");

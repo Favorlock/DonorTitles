@@ -20,6 +20,7 @@ public class GrantTitle extends BaseCommand {
 		setDescription("Grant a user a title");
 		setUsage("/title grant <user> <id>");
 		setArgumentRange(2, 2);
+		setPermission("donortitles.grant");
 		setIdentifiers(new String[] { "title grant" });
 	}
 
@@ -30,35 +31,30 @@ public class GrantTitle extends BaseCommand {
 		String titleId = args[1];
 
 		if (sender instanceof Player) {
-			Player player = (Player) sender;
-			if (DonorTitles.perms.has(player, "donortitles.grant")) {
-				try {
-					if (!DBManager.idExist(titleId)) {
-						sender.sendMessage("This id does not exist.");
-						return false;
-					}
-					if (DBManager.hasTitle(playerName, titleId)) {
-						sender.sendMessage("Player already has this title.");
-						return false;
-					}
-					if (DBManager.getTitleFromId(titleId) != null) {
-						DBManager.grantTitle(playerName, titleId);
-						sender.sendMessage(FontFormat.translateString("Player " + playerName
-								+ " has been granted the title: "
-								+ DBManager.getTitleFromId(titleId) + "&r."));
-						return true;
-					} else {
-						sender.sendMessage("There was an error granting a player a title");
-					}
-				} catch (Exception ex) {
-					plugin.getLogger().log(Level.SEVERE,
-							"Error executing Title Grant command.", ex);
+			try {
+				if (!DBManager.idExist(titleId)) {
+					sender.sendMessage("This id does not exist.");
 					return false;
 				}
-
+				if (DBManager.hasTitle(playerName, titleId)) {
+					sender.sendMessage("Player already has this title.");
+					return false;
+				}
+				if (DBManager.getTitleFromId(titleId) != null) {
+					DBManager.grantTitle(playerName, titleId);
+					sender.sendMessage(FontFormat.translateString("Player "
+							+ playerName + " has been granted the title: "
+							+ DBManager.getTitleFromId(titleId) + "&r."));
+					return true;
+				} else {
+					sender.sendMessage("There was an error granting a player a title");
+				}
+			} catch (Exception ex) {
+				plugin.getLogger().log(Level.SEVERE,
+						"Error executing Title Grant command.", ex);
 				return false;
 			}
-			sender.sendMessage("You do not have permission");
+
 			return false;
 		}
 		sender.sendMessage("Only players can use this command");

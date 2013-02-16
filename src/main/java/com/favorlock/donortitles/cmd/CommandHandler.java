@@ -19,8 +19,8 @@ public class CommandHandler {
 	
 	public CommandHandler(DonorTitles plugin) {
 		this.plugin = plugin;
-		this.commands = new LinkedHashMap();
-		this.identifiers = new HashMap();
+		this.commands = new LinkedHashMap<String, Command>();
+		this.identifiers = new HashMap<String, Command>();
 	}
 	
 	public void addCommand(Command command) {
@@ -53,7 +53,7 @@ public class CommandHandler {
 					}
 				}
 				
-				if (!hasPermission(sender, cmd.getPermission())) {
+				if (!DonorTitles.perms.has(sender, cmd.getPermission())) {
 					sender.sendMessage("Insufficient permission.");
 					return true;
 				}
@@ -93,15 +93,7 @@ public class CommandHandler {
 	}
 	
 	public List<Command> getCommands() {
-		return new ArrayList(this.commands.values());
-	}
-	
-	public static boolean hasPermission(CommandSender sender, String permission) {
-		if ((!(sender instanceof Player)) || (permission == null) || (permission.isEmpty())) {
-			return true;
-		}
-		Player player = (Player)sender;
-		return (player.isOp()) || (DonorTitles.perms.has(player, permission));
+		return new ArrayList<Command>(this.commands.values());
 	}
 
 }

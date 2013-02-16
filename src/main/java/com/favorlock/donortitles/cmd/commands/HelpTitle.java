@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.bukkit.command.CommandSender;
 
-import com.dthielke.herochat.command.CommandHandler;
 import com.favorlock.donortitles.DonorTitles;
 import com.favorlock.donortitles.cmd.BaseCommand;
 import com.favorlock.donortitles.cmd.Command;
@@ -21,35 +20,30 @@ public class HelpTitle extends BaseCommand {
 		setDescription("List DonorTitle commands");
 		setUsage("/title help");
 		setArgumentRange(0, 0);
+		setPermission("donortitles.help");
 		setIdentifiers(new String[] { "title help", "title ?" });
 	}
 
 	public boolean execute(CommandSender sender, String identifier,
 			String[] args) {
 
-		if (DonorTitles.perms.has(sender, "donortitles.help")) {
-			List<Command> sortCommands = plugin.getCommandHandler()
-					.getCommands();
-			List<Command> commands = new ArrayList<Command>();
+		List<Command> sortCommands = plugin.getCommandHandler().getCommands();
+		List<Command> commands = new ArrayList<Command>();
 
-			for (Command command : sortCommands) {
-				if ((command.isShownOnHelpMenu())
-						&& (CommandHandler.hasPermission(sender,
-								command.getPermission()))) {
-					commands.add(command);
-				}
+		for (Command command : sortCommands) {
+			if (command.isShownOnHelpMenu()
+					&& DonorTitles.perms.has(sender, command.getPermission())) {
+				commands.add(command);
 			}
-
-			sender.sendMessage(FontFormat
-					.translateString("&c-----[ &fDonorTitles Help &c]-----"));
-			for (Command command : commands) {
-				sender.sendMessage(FontFormat.translateString("&a"
-						+ command.getUsage()));
-			}
-			return true;
 		}
-		sender.sendMessage("You do not have permission");
-		return false;
+
+		sender.sendMessage(FontFormat
+				.translateString("&c-----[ &fDonorTitles Help &c]-----"));
+		for (Command command : commands) {
+			sender.sendMessage(FontFormat.translateString("&a"
+					+ command.getUsage()));
+		}
+		return true;
 	}
 
 }
