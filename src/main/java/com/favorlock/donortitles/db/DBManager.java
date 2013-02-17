@@ -210,5 +210,24 @@ public class DBManager {
 		
 		return al;
 	}
+	
+	public static ArrayList<String> getAllTitles() throws SQLException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<String> al = new ArrayList<String>();
+		
+		try {
+			ps = SQLDatabase.dbm.getConnection().prepareStatement("SELECT titleid FROM titles;");
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				al.add(rs.getString("titleid"));
+			}
+		} catch (SQLException ex) {
+			throw new SQLException("There was an error getting the players titles", ex);
+		}
+		
+		return al;
+	}
 
 }
